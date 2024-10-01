@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokemon/commons/types/model.dart';
+import 'package:pokemon/common/types/model.dart';
 
 part 'pokemon_item_response_model.g.dart';
 

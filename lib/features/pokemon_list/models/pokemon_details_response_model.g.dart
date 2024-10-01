@@ -27,6 +27,7 @@ PokemonDetailsResponseModel _$PokemonDetailsResponseModelFromJson(
           ?.map((e) => Type.fromJson(e as Map<String, dynamic>))
           .toList(),
       color: json['color'] as String?,
+      cry: json['cry'] as String?,
     );
 
 Map<String, dynamic> _$PokemonDetailsResponseModelToJson(
@@ -42,6 +43,7 @@ Map<String, dynamic> _$PokemonDetailsResponseModelToJson(
       'stats': instance.stats,
       'types': instance.types,
       'color': instance.color,
+      'cry': instance.cry,
     };
 
 CommonItem _$CommonItemFromJson(Map<String, dynamic> json) => CommonItem(

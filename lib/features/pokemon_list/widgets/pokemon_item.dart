@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokemon/commons/theme/colors.dart';
-import 'package:pokemon/commons/utilities/text.dart';
+import 'package:pokemon/common/theme/colors.dart';
+import 'package:pokemon/common/utilities/text.dart';
+import 'package:pokemon/common/widgets/animated_network_image.dart';
 import 'package:pokemon/features/pokemon_list/models/pokemon_details_response_model.dart';
 
 class PokemonItem extends StatelessWidget {
@@ -10,6 +11,7 @@ class PokemonItem extends StatelessWidget {
   const PokemonItem({super.key, required this.item});
 
   void _goToDetailScreen(BuildContext context) {
+    if (item?.name == null) return;
     context.push('/pokemon/${item?.name}');
   }
 
@@ -86,11 +88,11 @@ class PokemonItem extends StatelessWidget {
                       }).toList(),
                     ),
                   ),
-                  Image.network(
-                    image,
+                  AnimatedNetworkImage(
+                    tag: '${item?.name}_pokemon_image',
+                    image: image,
                     width: imageSize,
                     height: imageSize,
-                    fit: BoxFit.fill,
                   ),
                 ],
               )

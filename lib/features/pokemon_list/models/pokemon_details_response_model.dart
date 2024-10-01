@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../commons/types/model.dart';
+import '../../../common/types/model.dart';
 
 part 'pokemon_details_response_model.g.dart';
 
@@ -17,6 +17,7 @@ final class PokemonDetailsResponseModel extends Equatable {
   final List<Stat>? stats;
   final List<Type>? types;
   final String? color;
+  final String? cry;
 
   const PokemonDetailsResponseModel({
     this.id,
@@ -29,10 +30,12 @@ final class PokemonDetailsResponseModel extends Equatable {
     this.stats,
     this.types,
     this.color,
+    this.cry,
   });
 
   factory PokemonDetailsResponseModel.fromJson(JsonMap json) {
     json['image'] = json['sprites']['other']['home']['front_shiny'];
+    json['cry'] = json['cries']['latest'];
     return _$PokemonDetailsResponseModelFromJson(json);
   }
 

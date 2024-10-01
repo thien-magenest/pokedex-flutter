@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:pokemon/commons/types/model.dart';
+import 'package:pokemon/common/types/model.dart';
 import 'package:pokemon/features/pokemon_list/models/pokemon_details_response_model.dart';
 import 'package:pokemon/models/pagination_response_api_model.dart';
 import 'package:pokemon/services/pokemon_http_client.dart';
@@ -16,24 +16,6 @@ class PokemonService {
       _httpClient.get('https://pokeapi.co/api/v2/pokemon-species/$pokemonName'),
       _httpClient.get('/pokemon/$pokemonName')
     ]);
-  }
-
-  static PaginationResponseApiModel<PokemonItemResponseModel>
-      _parsePokemonMetaList(dynamic data) {
-    return PaginationResponseApiModel<PokemonItemResponseModel>.fromJson(
-      data,
-      (json) => PokemonItemResponseModel.fromJson(json as JsonMap),
-    );
-  }
-
-  static List<PokemonDetailsResponseModel> _parsePokemons(
-      List<List<Response<dynamic>>> responses) {
-    return responses.map(
-      (item) {
-        item.last.data['color'] = item.first.data['color']['name'];
-        return PokemonDetailsResponseModel.fromJson(item.last.data);
-      },
-    ).toList();
   }
 
   static Future<List<PokemonDetailsResponseModel>?> fetchPokemons(
@@ -58,4 +40,21 @@ class PokemonService {
 
     return compute(_parsePokemons, pokemonResponses);
   }
+
+  static PaginationResponseApiModel<PokemonItemResponseModel>
+      _parsePokemonMetaList(dynamic data) =>
+          PaginationResponseApiModel<PokemonItemResponseModel>.fromJson(
+            data,
+            (json) => PokemonItemResponseModel.fromJson(json as JsonMap),
+          );
+
+  static List<PokemonDetailsResponseModel> _parsePokemons(
+    List<List<Response<dynamic>>> responses,
+  ) =>
+      responses.map(
+        (item) {
+          item.last.data['color'] = item.first.data['color']['name'];
+          return PokemonDetailsResponseModel.fromJson(item.last.data);
+        },
+      ).toList();
 }

@@ -5,7 +5,7 @@ import 'package:pokemon/features/pokemon_list/models/pokemon_details_response_mo
 import 'package:stream_transform/stream_transform.dart';
 
 import '../../../services/pokemon_http_client.dart';
-import '../services/pokemon_services.dart';
+import '../../features/pokemon_list/services/pokemon_services.dart';
 
 part 'pokemon_event.dart';
 part 'pokemon_state.dart';
@@ -34,7 +34,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
 
     try {
       final data = await PokemonService.fetchPokemons(
-        ServicePagination(offset: state.pokemons.length ?? 0),
+        ServicePagination(offset: state.pokemons.length),
       );
 
       if (data == null) return;

@@ -1,35 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokemon/features/pokemon_list/bloc/pokemon_bloc.dart';
+import 'package:pokemon/common/bloc/pokemon_bloc.dart';
 import 'package:pokemon/features/pokemon_list/widgets/pokemon_item.dart';
 
-class PokemonsScreen extends StatelessWidget {
+class PokemonsScreen extends StatefulWidget {
   const PokemonsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      lazy: false,
-      create: (_) => PokemonBloc()..add(PokemonFetched()),
-      child: const _PokemonsView(),
-    );
-  }
+  State<PokemonsScreen> createState() => _PokemonsScreenState();
 }
 
-class _PokemonsView extends StatefulWidget {
-  const _PokemonsView({super.key});
-
-  @override
-  State<_PokemonsView> createState() => _PokemonsViewState();
-}
-
-class _PokemonsViewState extends State<_PokemonsView> {
+class _PokemonsScreenState extends State<PokemonsScreen> {
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    context.read<PokemonBloc>().add(PokemonFetched());
   }
 
   @override
@@ -48,7 +36,7 @@ class _PokemonsViewState extends State<_PokemonsView> {
     if (!_scrollController.hasClients) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
+    return currentScroll >= (maxScroll * 0.8);
   }
 
   @override
@@ -81,12 +69,15 @@ class _PokemonsViewState extends State<_PokemonsView> {
                       );
                     case PokemonStatus.failure:
                       return const SliverFillRemaining(
-                        child: Center(child: Text('Failed to fetch Pokemons')),
+                        child: Center(
+                          child: Text('Failed to fetch Pokemons'),
+                        ),
                       );
                     case PokemonStatus.success:
                       if (state.pokemons.isEmpty) {
                         return const SliverFillRemaining(
-                            child: Center(child: Text('Empty')));
+                          child: Center(child: Text('Empty')),
+                        );
                       }
                       return SliverMainAxisGroup(
                         slivers: [

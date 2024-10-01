@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:pokemon/commons/types/model.dart';
+import 'package:pokemon/common/types/model.dart';
 
 class ServicePagination {
   int offset;
