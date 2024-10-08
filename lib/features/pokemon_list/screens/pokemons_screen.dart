@@ -68,9 +68,9 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
                         child: Center(child: CircularProgressIndicator()),
                       );
                     case PokemonStatus.failure:
-                      return const SliverFillRemaining(
+                      return SliverFillRemaining(
                         child: Center(
-                          child: Text('Failed to fetch Pokemons'),
+                          child: Text(state.error.toString()),
                         ),
                       );
                     case PokemonStatus.success:

@@ -37,7 +37,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
         ServicePagination(offset: state.pokemons.length),
       );
 
-      if (data == null) return;
+      if (data == null) throw Exception('data is null');
 
       emit(
         data.isEmpty
@@ -48,8 +48,8 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
                 hasReachedMax: false,
               ),
       );
-    } catch (_) {
-      emit(state.copyWith(status: PokemonStatus.failure));
+    } catch (error) {
+      emit(state.copyWith(status: PokemonStatus.failure, error: error));
     }
   }
 }

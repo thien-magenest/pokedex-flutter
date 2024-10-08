@@ -11,9 +11,11 @@ class PokemonService {
   static final PokemonHttpClient _httpClient = PokemonHttpClient();
 
   static Future<List<Response<dynamic>>> _fetchPokemonDetails(
-      String pokemonName) async {
+    String pokemonName,
+  ) async {
+    final List<String> name = pokemonName.split('-');
     return Future.wait([
-      _httpClient.get('https://pokeapi.co/api/v2/pokemon-species/$pokemonName'),
+      _httpClient.get('/pokemon-species/${name.first}'),
       _httpClient.get('/pokemon/$pokemonName')
     ]);
   }
@@ -26,9 +28,7 @@ class PokemonService {
     final pokemonMetaList =
         await compute(_parsePokemonMetaList, metaResponse.data);
 
-    if (pokemonMetaList.results != null && pokemonMetaList.results!.isEmpty) {
-      return null;
-    }
+    if (pokemonMetaList.results!.isEmpty) return null;
 
     final pokemonResponses = await Future.wait(
       pokemonMetaList.results!.map(
@@ -37,7 +37,6 @@ class PokemonService {
     );
 
     if (pokemonResponses.isEmpty) return null;
-
     return compute(_parsePokemons, pokemonResponses);
   }
 
