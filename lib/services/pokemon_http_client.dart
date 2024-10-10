@@ -18,7 +18,7 @@ class PokemonHttpClient with DioMixin implements Dio {
       receiveTimeout: const Duration(seconds: 5),
     );
 
-    interceptors.add(LogInterceptor(responseBody: true));
+    // interceptors.add(LogInterceptor(responseBody: true));
 
     httpClientAdapter = HttpClientAdapter();
   }

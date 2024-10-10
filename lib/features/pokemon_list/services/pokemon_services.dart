@@ -10,13 +10,10 @@ import '../models/pokemon_item_response_model.dart';
 class PokemonService {
   static final PokemonHttpClient _httpClient = PokemonHttpClient();
 
-  static Future<List<Response<dynamic>>> _fetchPokemonDetails(
-    String pokemonName,
-  ) async {
-    final List<String> name = pokemonName.split('-');
+  static Future<List<Response<dynamic>>> _fetchPokemonDetails(int id) {
     return Future.wait([
-      _httpClient.get('/pokemon-species/${name.first}'),
-      _httpClient.get('/pokemon/$pokemonName')
+      _httpClient.get('/pokemon-species/$id'),
+      _httpClient.get('/pokemon/$id')
     ]);
   }
 
@@ -32,7 +29,12 @@ class PokemonService {
 
     final pokemonResponses = await Future.wait(
       pokemonMetaList.results!.map(
-        (item) => _fetchPokemonDetails(item.name!),
+        (item) {
+          final urlSplit = item.url?.split('/');
+          final id = urlSplit?.elementAt(urlSplit.length - 2);
+
+          return _fetchPokemonDetails(int.parse(id ?? '1'));
+        },
       ),
     );
 
@@ -53,6 +55,8 @@ class PokemonService {
       responses.map(
         (item) {
           item.last.data['color'] = item.first.data['color']['name'];
+          item.last.data['gender_rate'] = item.first.data['gender_rate'];
+          item.last.data['egg_groups'] = item.first.data['egg_groups'];
           return PokemonDetailsResponseModel.fromJson(item.last.data);
         },
       ).toList();

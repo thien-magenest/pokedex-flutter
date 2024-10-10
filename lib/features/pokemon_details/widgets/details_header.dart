@@ -11,15 +11,12 @@ class DetailsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.sizeOf(context).width;
-    final double screenHeight = MediaQuery.sizeOf(context).height;
-
     final name = TextUtils.capitalize(pokemon.name);
 
     return SafeArea(
       top: true,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        height: screenHeight * 0.45,
         width: screenWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,22 +78,24 @@ class DetailsHeader extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 32,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
               ],
             ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AnimatedNetworkImage(
-                  tag: '${pokemon.name}_pokemon_image',
-                  image: pokemon.image!,
-                  width: screenWidth / 2,
-                  height: screenWidth / 2,
-                ),
-              ],
-            )
+            if (pokemon.name != null && pokemon.image != null)
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedNetworkImage(
+                    tag: '${pokemon.name}_pokemon_image',
+                    image: pokemon.image!,
+                    width: screenWidth / 2,
+                    height: screenWidth / 2,
+                  ),
+                ],
+              )
           ],
         ),
       ),

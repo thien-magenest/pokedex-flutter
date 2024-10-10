@@ -25,7 +25,7 @@ class PokemonColors {
     'pink': pink,
   };
 
-  static Color fromName(String name) {
+  static Color fromName(String? name) {
     return _colorMap[name] ?? white;
   }
 }

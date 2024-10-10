@@ -14,7 +14,7 @@ PokemonDetailsResponseModel _$PokemonDetailsResponseModelFromJson(
       height: (json['height'] as num?)?.toInt(),
       weight: (json['weight'] as num?)?.toInt(),
       abilities: (json['abilities'] as List<dynamic>?)
-          ?.map((e) => CommonItem.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Ability.fromJson(e as Map<String, dynamic>))
           .toList(),
       forms: (json['forms'] as List<dynamic>?)
           ?.map((e) => CommonItem.fromJson(e as Map<String, dynamic>))
@@ -28,6 +28,10 @@ PokemonDetailsResponseModel _$PokemonDetailsResponseModelFromJson(
           .toList(),
       color: json['color'] as String?,
       cry: json['cry'] as String?,
+      genderRate: (json['gender_rate'] as num?)?.toInt(),
+      eggGroups: (json['egg_groups'] as List<dynamic>?)
+          ?.map((e) => CommonItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$PokemonDetailsResponseModelToJson(
@@ -44,6 +48,8 @@ Map<String, dynamic> _$PokemonDetailsResponseModelToJson(
       'types': instance.types,
       'color': instance.color,
       'cry': instance.cry,
+      'gender_rate': instance.genderRate,
+      'egg_groups': instance.eggGroups,
     };
 
 CommonItem _$CommonItemFromJson(Map<String, dynamic> json) => CommonItem(
@@ -53,6 +59,16 @@ CommonItem _$CommonItemFromJson(Map<String, dynamic> json) => CommonItem(
 
 Map<String, dynamic> _$CommonItemToJson(CommonItem instance) =>
     <String, dynamic>{
+      'name': instance.name,
+      'url': instance.url,
+    };
+
+Ability _$AbilityFromJson(Map<String, dynamic> json) => Ability(
+      name: json['name'] as String?,
+      url: json['url'] as String?,
+    );
+
+Map<String, dynamic> _$AbilityToJson(Ability instance) => <String, dynamic>{
       'name': instance.name,
       'url': instance.url,
     };
