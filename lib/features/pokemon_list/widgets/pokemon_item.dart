@@ -10,11 +10,6 @@ class PokemonItem extends StatelessWidget {
 
   const PokemonItem({super.key, required this.item});
 
-  void _goToDetailScreen(BuildContext context) {
-    if (item?.name == null) return;
-    context.push('/pokemon/${item?.name}');
-  }
-
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.sizeOf(context).width;
@@ -25,7 +20,10 @@ class PokemonItem extends StatelessWidget {
 
     return InkWell(
       borderRadius: BorderRadius.circular(16),
-      onTap: () => _goToDetailScreen(context),
+      onTap: () {
+        if (item?.name == null) return;
+        context.push('/pokemon/${item?.name}');
+      },
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

@@ -10,19 +10,12 @@ import '../../features/pokemon_list/services/pokemon_services.dart';
 part 'pokemon_event.dart';
 part 'pokemon_state.dart';
 
-const throttleDuration = Duration(milliseconds: 100);
-
-EventTransformer<E> throttleDroppable<E>(Duration duration) {
-  return (events, mapper) {
-    return droppable<E>().call(events.throttle(duration), mapper);
-  };
-}
-
 class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
   PokemonBloc() : super(const PokemonState()) {
     on<PokemonFetched>(
       _onPokemonFetched,
-      transformer: throttleDroppable(throttleDuration),
+      transformer: (events, mapper) => droppable<PokemonFetched>()
+          .call(events.throttle(const Duration(milliseconds: 300)), mapper),
     );
   }
 

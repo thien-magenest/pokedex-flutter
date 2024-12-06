@@ -8,11 +8,12 @@ final class PokemonState extends Equatable {
   final bool hasReachedMax;
   final dynamic error;
 
-  const PokemonState(
-      {this.status = PokemonStatus.initial,
-      this.pokemons = const <PokemonDetailsResponseModel>[],
-      this.hasReachedMax = false,
-      this.error});
+  const PokemonState({
+    this.status = PokemonStatus.initial,
+    this.pokemons = const <PokemonDetailsResponseModel>[],
+    this.hasReachedMax = false,
+    this.error,
+  });
 
   PokemonState copyWith({
     PokemonStatus? status,
