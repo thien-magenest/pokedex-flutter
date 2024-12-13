@@ -8,19 +8,23 @@ import 'package:pokemon/services/pokemon_http_client.dart';
 import '../models/pokemon_item_response_model.dart';
 
 class PokemonService {
-  static final PokemonHttpClient _httpClient = PokemonHttpClient();
+  final PokemonHttpClient _httpClient;
 
-  static Future<List<Response<dynamic>>> _fetchPokemonDetails(int id) {
+  const PokemonService(this._httpClient);
+
+  Future<List<Response<dynamic>>> _fetchPokemonDetails(int id) {
     return Future.wait([
       _httpClient.get('/pokemon-species/$id'),
       _httpClient.get('/pokemon/$id')
     ]);
   }
 
-  static Future<List<PokemonDetailsResponseModel>?> fetchPokemons(
+  Future<List<PokemonDetailsResponseModel>?> fetchPokemons(
       ServicePagination pagination) async {
     final metaResponse =
         await _httpClient.get('/pokemon', queryParameters: pagination.toMap());
+
+    if (metaResponse.data == null) return null;
 
     final pokemonMetaList =
         await compute(_parsePokemonMetaList, metaResponse.data);

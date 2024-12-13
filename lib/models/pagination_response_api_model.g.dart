@@ -6,19 +6,20 @@ part of 'pagination_response_api_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaginationResponseApiModel<T> _$PaginationResponseApiModelFromJson<T>(
+_$PaginationResponseApiModelImpl<T>
+    _$$PaginationResponseApiModelImplFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
-    PaginationResponseApiModel<T>(
-      count: (json['count'] as num?)?.toInt(),
-      next: json['next'] as String?,
-      previous: json['previous'] as String?,
-      results: (json['results'] as List<dynamic>?)?.map(fromJsonT).toList(),
-    );
+        _$PaginationResponseApiModelImpl<T>(
+          count: (json['count'] as num?)?.toInt(),
+          next: json['next'] as String?,
+          previous: json['previous'] as String?,
+          results: (json['results'] as List<dynamic>?)?.map(fromJsonT).toList(),
+        );
 
-Map<String, dynamic> _$PaginationResponseApiModelToJson<T>(
-  PaginationResponseApiModel<T> instance,
+Map<String, dynamic> _$$PaginationResponseApiModelImplToJson<T>(
+  _$PaginationResponseApiModelImpl<T> instance,
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{

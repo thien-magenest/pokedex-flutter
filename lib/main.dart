@@ -5,6 +5,7 @@ import 'package:pokemon/common/bloc/pokemon_bloc.dart';
 import 'package:pokemon/features/home/screens/home_screen.dart';
 import 'package:pokemon/features/pokemon_details/screens/pokemon_details_screen.dart';
 import 'package:pokemon/features/pokemon_list/screens/pokemons_screen.dart';
+import 'package:pokemon/services/pokemon_http_client.dart';
 
 void main() {
   runApp(const App());
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => PokemonBloc(),
+      create: (_) => PokemonBloc(PokemonHttpClient()),
       child: MaterialApp.router(
         title: 'Pokemon',
         theme: ThemeData(useMaterial3: true),

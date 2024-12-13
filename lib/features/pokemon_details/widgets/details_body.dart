@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:pokemon/common/utilities/pokemon.dart';
 import 'package:pokemon/common/utilities/text.dart';
 import 'package:pokemon/features/pokemon_details/widgets/details_body_section.dart';
 import 'package:pokemon/features/pokemon_details/widgets/details_information_item.dart';
@@ -18,7 +19,9 @@ class DetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final genderStatistical = pokemon.getGenderStatistical();
+    final pokemonUtils = PokemonUtils(pokemon);
+    final genderStatistical = pokemonUtils.getGenderStatistical();
+
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final double screenHeight = MediaQuery.sizeOf(context).height;
 
@@ -52,7 +55,7 @@ class DetailsBody extends StatelessWidget {
                 DetailsInformationItem(
                   label: 'Height',
                   child: Text(
-                    '${pokemon.getHeight()} m',
+                    '${pokemonUtils.getHeight()} m',
                     style: _defaultItemValueTextStyle,
                   ),
                 ),
@@ -60,7 +63,7 @@ class DetailsBody extends StatelessWidget {
                 DetailsInformationItem(
                   label: 'Weight',
                   child: Text(
-                    '${pokemon.getWeight()} kg',
+                    '${pokemonUtils.getWeight()} kg',
                     style: _defaultItemValueTextStyle,
                   ),
                 ),
@@ -136,7 +139,7 @@ class DetailsBody extends StatelessWidget {
                         children: [
                           if (i != 0) const SizedBox(height: 4),
                           DetailsStatItem(
-                            label: stat.getName(),
+                            label: pokemonUtils.getStatisticalName(),
                             stat: stat.baseStat ?? 0,
                           )
                         ],

@@ -6,36 +6,19 @@ import 'package:pokemon/features/pokemon_details/widgets/details_body.dart';
 import 'package:pokemon/features/pokemon_details/widgets/details_header.dart';
 import 'package:pokemon/features/pokemon_list/models/pokemon_details_response_model.dart';
 
-class PokemonDetailsScreen extends StatefulWidget {
+class PokemonDetailsScreen extends StatelessWidget {
   final String name;
 
   const PokemonDetailsScreen({super.key, required this.name});
 
   @override
-  State<PokemonDetailsScreen> createState() => _PokemonDetailsScreenState();
-}
-
-class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
-  PokemonDetailsResponseModel? _pokemonCache;
-
-  PokemonDetailsResponseModel? _getPokemon(PokemonState state) {
-    if (_pokemonCache == null) {
-      final pokemonMatched = state.pokemons.firstWhere(
-        (it) => it.name == widget.name,
-        orElse: () => const PokemonDetailsResponseModel(),
-      );
-      if (pokemonMatched.id != null) _pokemonCache = pokemonMatched;
-    }
-
-    return _pokemonCache;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<PokemonBloc, PokemonState>(
       builder: (context, state) {
-        final pokemon = _getPokemon(state);
-        if (pokemon == null) return const SizedBox();
+        PokemonDetailsResponseModel? pokemon = state.pokemons.firstWhere(
+          (it) => it.name == name,
+          orElse: () => const PokemonDetailsResponseModel(),
+        );
 
         return Scaffold(
           extendBodyBehindAppBar: true,

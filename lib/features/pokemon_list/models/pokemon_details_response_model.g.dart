@@ -6,9 +6,9 @@ part of 'pokemon_details_response_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PokemonDetailsResponseModel _$PokemonDetailsResponseModelFromJson(
+_$PokemonDetailsResponseModelImpl _$$PokemonDetailsResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    PokemonDetailsResponseModel(
+    _$PokemonDetailsResponseModelImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       height: (json['height'] as num?)?.toInt(),
@@ -34,8 +34,8 @@ PokemonDetailsResponseModel _$PokemonDetailsResponseModelFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$PokemonDetailsResponseModelToJson(
-        PokemonDetailsResponseModel instance) =>
+Map<String, dynamic> _$$PokemonDetailsResponseModelImplToJson(
+        _$PokemonDetailsResponseModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -52,47 +52,52 @@ Map<String, dynamic> _$PokemonDetailsResponseModelToJson(
       'egg_groups': instance.eggGroups,
     };
 
-CommonItem _$CommonItemFromJson(Map<String, dynamic> json) => CommonItem(
+_$CommonItemImpl _$$CommonItemImplFromJson(Map<String, dynamic> json) =>
+    _$CommonItemImpl(
       name: json['name'] as String?,
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$CommonItemToJson(CommonItem instance) =>
+Map<String, dynamic> _$$CommonItemImplToJson(_$CommonItemImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'url': instance.url,
     };
 
-Ability _$AbilityFromJson(Map<String, dynamic> json) => Ability(
+_$AbilityImpl _$$AbilityImplFromJson(Map<String, dynamic> json) =>
+    _$AbilityImpl(
       name: json['name'] as String?,
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$AbilityToJson(Ability instance) => <String, dynamic>{
+Map<String, dynamic> _$$AbilityImplToJson(_$AbilityImpl instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'url': instance.url,
     };
 
-Stat _$StatFromJson(Map<String, dynamic> json) => Stat(
+_$StatImpl _$$StatImplFromJson(Map<String, dynamic> json) => _$StatImpl(
       baseStat: (json['base_stat'] as num?)?.toInt(),
       effort: (json['effort'] as num?)?.toInt(),
       name: json['name'] as String?,
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$StatToJson(Stat instance) => <String, dynamic>{
+Map<String, dynamic> _$$StatImplToJson(_$StatImpl instance) =>
+    <String, dynamic>{
       'base_stat': instance.baseStat,
       'effort': instance.effort,
       'name': instance.name,
       'url': instance.url,
     };
 
-Type _$TypeFromJson(Map<String, dynamic> json) => Type(
+_$TypeImpl _$$TypeImplFromJson(Map<String, dynamic> json) => _$TypeImpl(
       name: json['name'] as String?,
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$TypeToJson(Type instance) => <String, dynamic>{
+Map<String, dynamic> _$$TypeImplToJson(_$TypeImpl instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'url': instance.url,
     };
