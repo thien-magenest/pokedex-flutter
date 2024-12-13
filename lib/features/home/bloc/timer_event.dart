@@ -1,13 +1,19 @@
 part of 'timer_bloc.dart';
 
-sealed class TimerEvent {
+sealed class TimerEvent extends Equatable {
   const TimerEvent();
+
+  @override
+  List<Object?> get props => [];
 }
 
 final class _TimerTicked extends TimerEvent {
   final int duration;
 
   const _TimerTicked(this.duration);
+
+  @override
+  List<Object?> get props => [duration];
 }
 
 final class TimerStarted extends TimerEvent {

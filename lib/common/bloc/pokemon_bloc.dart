@@ -1,22 +1,29 @@
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pokemon/features/pokemon_list/models/pokemon_details_response_model.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 import '../../../services/pokemon_http_client.dart';
 import '../../features/pokemon_list/services/pokemon_services.dart';
 
+part 'pokemon_bloc.freezed.dart';
 part 'pokemon_event.dart';
 part 'pokemon_state.dart';
 
+Stream<T> eventTransformer<T>(Stream<T> events, EventMapper<T> mapper) {
+  return droppable<T>()
+      .call(events.throttle(const Duration(milliseconds: 300)), mapper);
+}
+
 class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
-  PokemonBloc() : super(const PokemonState()) {
-    on<PokemonFetched>(
-      _onPokemonFetched,
-      transformer: (events, mapper) => droppable<PokemonFetched>()
-          .call(events.throttle(const Duration(milliseconds: 300)), mapper),
-    );
+  final PokemonService _pokemonService;
+
+  PokemonBloc(PokemonHttpClient httpClient)
+      : _pokemonService = PokemonService(httpClient),
+        super(const PokemonState()) {
+    on<PokemonFetched>(_onPokemonFetched, transformer: eventTransformer);
   }
 
   Future<void> _onPokemonFetched(
@@ -26,7 +33,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     if (state.hasReachedMax) return;
 
     try {
-      final data = await PokemonService.fetchPokemons(
+      final data = await _pokemonService.fetchPokemons(
         ServicePagination(offset: state.pokemons.length),
       );
 
