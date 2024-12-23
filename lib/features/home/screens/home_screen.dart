@@ -27,8 +27,7 @@ class HomeView extends StatelessWidget {
     final state = context.select((TimerBloc bloc) => bloc.state);
     final duration = state.duration;
 
-    final minutesStr =
-        ((duration / 60) % 60).floor().toString().padLeft(2, '0');
+    final minutesStr = (duration ~/ 60).floor().toString().padLeft(2, '0');
     final secondsStr = (duration % 60).floor().toString().padLeft(2, '0');
 
     return Center(
@@ -36,20 +35,27 @@ class HomeView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text('$minutesStr:$secondsStr'),
-          ElevatedButton(
-            onPressed: () {
-              if (state is TimerInitial) timerBloc.add(const TimerStarted());
-              if (state is TimerInProgress) timerBloc.add(const TimerPaused());
-              if (state is TimerPause) timerBloc.add(const TimerResumed());
-            },
-            child: Text(state is TimerInitial
-                ? 'Start'
-                : state is TimerInProgress
-                    ? 'Pause'
-                    : state is TimerPause
-                        ? 'Resume'
-                        : ''),
-          ),
+          if (state.status != TimerStatus.complete)
+            ElevatedButton(
+              onPressed: () {
+                switch (state.status) {
+                  case TimerStatus.initial:
+                    timerBloc.add(const TimerStarted());
+                  case TimerStatus.inProgress:
+                    timerBloc.add(const TimerPaused());
+                  case TimerStatus.pause:
+                    timerBloc.add(const TimerResumed());
+                  case TimerStatus.complete:
+                    timerBloc.add(const TimerReset());
+                }
+              },
+              child: Text(switch (state.status) {
+                TimerStatus.initial => 'Start',
+                TimerStatus.inProgress => 'Pause',
+                TimerStatus.pause => 'Resume',
+                TimerStatus.complete => 'Reset'
+              }),
+            ),
           ElevatedButton(
             onPressed: () {
               timerBloc.add(const TimerReset());
