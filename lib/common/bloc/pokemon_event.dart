@@ -1,8 +1,5 @@
 part of 'pokemon_bloc.dart';
 
-sealed class PokemonEvent extends Equatable {
-  @override
-  List<Object> get props => [];
-}
+sealed class PokemonEvent {}
 
 final class PokemonFetched extends PokemonEvent {}
