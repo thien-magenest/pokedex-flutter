@@ -138,10 +138,13 @@ class DetailsBody extends StatelessWidget {
                       (i, stat) => Column(
                         children: [
                           if (i != 0) const SizedBox(height: 4),
-                          DetailsStatItem(
-                            label: pokemonUtils.getStatisticalName(),
-                            stat: stat.baseStat ?? 0,
-                          )
+                          if (stat.name != null)
+                            DetailsStatItem(
+                              index: i,
+                              label:
+                                  pokemonUtils.getStatisticalName(stat.name!),
+                              stat: stat.baseStat ?? 0,
+                            )
                         ],
                       ),
                     )

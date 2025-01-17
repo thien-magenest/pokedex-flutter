@@ -21,7 +21,7 @@ final class PokemonUtils {
     return (male: male, female: female);
   }
 
-  String getStatisticalName() => switch (pokemon.name) {
+  String getStatisticalName(String statName) => switch (statName) {
         'hp' => 'HP',
         'attack' => 'Attack',
         'defense' => 'Defense',

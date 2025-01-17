@@ -4,11 +4,13 @@ import 'package:pokemon/common/theme/colors.dart';
 class DetailsStatItem extends StatefulWidget {
   final String label;
   final int stat;
+  final int index;
 
   const DetailsStatItem({
     super.key,
     required this.label,
     required this.stat,
+    required this.index,
   });
 
   @override
@@ -35,7 +37,11 @@ class _DetailsStatItemState extends State<DetailsStatItem>
       ),
     );
 
-    _controller.forward();
+    Future.delayed(Duration(milliseconds: widget.index * 50)).then(
+      (value) {
+        _controller.forward();
+      },
+    );
   }
 
   @override
@@ -70,10 +76,14 @@ class _DetailsStatItemState extends State<DetailsStatItem>
               builder: (context, child) {
                 return FractionallySizedBox(
                   widthFactor: _animation.value,
+                  heightFactor: 1,
                   child: Container(
-                    color: widget.stat > 50
-                        ? PokemonColors.green
-                        : PokemonColors.red,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(3),
+                      color: widget.stat > 50
+                          ? PokemonColors.green
+                          : PokemonColors.red,
+                    ),
                   ),
                 );
               },
